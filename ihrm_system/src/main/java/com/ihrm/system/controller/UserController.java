@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-//解决跨域问题
+/**
+ * 用户管理
+ * @author LPJ
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/sys")
@@ -21,37 +24,33 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    //保存用户
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+
+    @PostMapping(value = "/user")
     public Result add(@RequestBody User user) throws Exception {
         userService.save(user);
         return Result.SUCCESS();
     }
-    //更新用户
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-    public Result update(@PathVariable(name = "id") String id, @RequestBody User user)
+
+    @PutMapping(value = "/user/{id}")
+    public Result update(@RequestBody User user)
             throws Exception {
         userService.update(user);
         return Result.SUCCESS();
     }
-    //删除用户
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+
+    @DeleteMapping(value = "/user/{id}")
     public Result delete(@PathVariable(name = "id") String id) throws Exception {
         userService.delete(id);
         return Result.SUCCESS();
     }
-    /**
-     * 根据ID查询用户
-     */
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+
+    @GetMapping(value = "/user/{id}")
     public Result findById(@PathVariable(name = "id") String id) throws Exception {
         User user = userService.findById(id);
         return new Result(ResultCode.SUCCESS,user);
     }
-    /**
-     * 分页查询用户
-     */
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+
+    @GetMapping("/user")
     public Result findByPage(int page,int pagesize,@RequestParam Map<String,Object>
             map) throws Exception {
         Page<User> searchPage = userService.findSearch(map, page, pagesize);

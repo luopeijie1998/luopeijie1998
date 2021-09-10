@@ -8,7 +8,10 @@ import com.ihrm.system.dao.RoleDao;
 import com.ihrm.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+/**
+ * 角色管理
+ * @author LPJ
+ */
 @RestController
 @RequestMapping("/sys")
 public class RoleController extends BaseController {
@@ -32,7 +35,7 @@ public class RoleController extends BaseController {
         return Result.SUCCESS();
     }
     //删除角色
-    @PostMapping("/role/{id}")
+    @DeleteMapping("/role/{id}")
     public Result delete(@PathVariable(name = "id") String id) throws Exception {
         roleService.delete(id);
         return Result.SUCCESS();
@@ -40,7 +43,7 @@ public class RoleController extends BaseController {
     /**
      * 根据ID获取角色信息
      */
-    @RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/role/{id}")
     public Result findById(@PathVariable(name = "id") String id) throws Exception {
         Role role = roleService.findById(id);
      return new Result(ResultCode.SUCCESS,role);
