@@ -1,10 +1,10 @@
 
-_
-java:S1128"IRemove this unused import 'com.fasterxml.jackson.annotation.JsonInclude'.(şîÌ
 o
 java:S1128"TRemove this unused import 'com.fasterxml.jackson.databind.annotation.JsonSerialize'.(ÖÎèöúÿÿÿÿ
-c	java:S1009"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ó‘¾ç
 h	java:S1005"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·¶ÛÌûÿÿÿÿ
 h	java:S1001"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’ñÊ¾ùÿÿÿÿ
 Q
 java:S1128"6Remove this unused import 'lombok.AllArgsConstructor'.(´œ¾öùÿÿÿÿ
+_
+java:S1128"IRemove this unused import 'com.fasterxml.jackson.annotation.JsonInclude'.(şîÌ
+c	java:S1009"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ó‘¾ç

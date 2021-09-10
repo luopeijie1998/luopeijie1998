@@ -1,28 +1,28 @@
 
-F
-java:S1905v")Remove this unnecessary cast to "String".(ïŸú°8îÏ›â·/
+C
+java:S1172"&Remove these unused method parameters.(¿éÇ€8îÏ›â·/
+Q
+java:S3740m"/Provide the parametrized type for this generic.(¢£Šúüÿÿÿÿ8îÏ›â·/
 K
 java:S1905{")Remove this unnecessary cast to "String".(¬ÿ«øÿÿÿÿ8îÏ›â·/
 t
 java:S1192ƒ"QDefine a constant instead of duplicating this literal "formOfEmployment" 4 times.(ı´ğûÿÿÿÿ8îÏ›â·/
-Q
-java:S3740m"/Provide the parametrized type for this generic.(¢£Šúüÿÿÿÿ8îÏ›â·/
-j
-java:S1192~"MDefine a constant instead of duplicating this literal "departmentId" 6 times.(­ûì8îÏ›â·/
-G
-java:S1905")Remove this unnecessary cast to "String".(ÕôÁ8îÏ›â·/
-f
-java:S1192Œ"HDefine a constant instead of duplicating this literal "hasDept" 3 times.(  ÁÊ8îÏ›â·/
-h
-java:S1192ˆ"JDefine a constant instead of duplicating this literal "companyId" 4 times.(şÿ”¡8îÏ›â·/
-E	java:S108~")Either remove or fill this block of code.(­ûì8îÏ›â·/
 t
 java:S3776m"RRefactor this method to reduce its Cognitive Complexity from 22 to the 15 allowed.(¢£Šúüÿÿÿÿ8îÏ›â·/
 v
 java:S2293r"YReplace the type specification in this constructor call with the diamond operator ("<>").(É™ïğ8îÏ›â·/
-c
-java:S1192y"GDefine a constant instead of duplicating this literal "mobile" 4 times.(ë–Æ8îÏ›â·/
+f
+java:S1192Œ"HDefine a constant instead of duplicating this literal "hasDept" 3 times.(  ÁÊ8îÏ›â·/
 E
 java:S1604n"(Make this anonymous inner class a lambda(™êÆ8îÏ›â·/
-C
-java:S1172"&Remove these unused method parameters.(¿éÇ€8îÏ›â·/
+h
+java:S1192ˆ"JDefine a constant instead of duplicating this literal "companyId" 4 times.(şÿ”¡8îÏ›â·/
+F
+java:S1905v")Remove this unnecessary cast to "String".(ïŸú°8îÏ›â·/
+c
+java:S1192y"GDefine a constant instead of duplicating this literal "mobile" 4 times.(ë–Æ8îÏ›â·/
+E	java:S108~")Either remove or fill this block of code.(­ûì8îÏ›â·/
+G
+java:S1905")Remove this unnecessary cast to "String".(ÕôÁ8îÏ›â·/
+j
+java:S1192~"MDefine a constant instead of duplicating this literal "departmentId" 6 times.(­ûì8îÏ›â·/

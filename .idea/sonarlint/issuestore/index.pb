@@ -63,3 +63,13 @@ r
 Bihrm_system/src/main/java/com/ihrm/system/service/UserService.java,3\d\3d179867d650831b86da9da795c2607f0dd5235c
 x
 Hihrm_system/src/main/java/com/ihrm/system/controller/UserController.java,6\f\6fc628cacd22d837ebc137e4c7e3baf33f23800f
+\
+,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+w
+Gihrm_common_model/src/main/java/com/ihrm/domain/company/Department.java,3\7\37749f363ed2c00cf802458a31968c2c804e28c9
+_
+/ihrm_company/src/main/resources/application.yml,1\4\147d5793ce7c277f8db9bb7b18f7eac2157ea086
+[
++ihrm_company/target/classes/application.yml,f\a\fad7dbc378e51e803097915e6b5b1da1e7209669

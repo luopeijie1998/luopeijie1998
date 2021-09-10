@@ -1,18 +1,18 @@
 
-b	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(şÓã8—Ãºâ·/
-j
-java:S4488&"NReplace "@RequestMapping(method = RequestMethod.DELETE)" with "@DeleteMapping"(Ü’í*8Å†Áâ·/
-e
-java:S44886"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(Ä€¥¨8ğ‹Åâ·/
-j
-java:S4488."HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(ö©Şúÿÿÿÿ8ƒ¸Ãâ·/
 l
 java:S4488"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(•´ªÂÿÿÿÿÿ8ûëºâ·/
-b	java:S112/"FDefine and throw a dedicated exception instead of using a generic one.(á©ÄŞ8ƒ¸Ãâ·/
+j
+java:S4488."HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(ö©Şúÿÿÿÿ8ƒ¸Ãâ·/
 Q
 java:S3740;"/Provide the parametrized type for this generic.(ïúùüÿÿÿÿ8°‰Æâ·/
+b	java:S1128"FDefine and throw a dedicated exception instead of using a generic one.(„äî»8ğ‹Åâ·/
+e
+java:S44886"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(Ä€¥¨8ğ‹Åâ·/
 g	java:S112'"FDefine and throw a dedicated exception instead of using a generic one.(Ü¢»¥ùÿÿÿÿ8Å†Áâ·/
+g	java:S112!"FDefine and throw a dedicated exception instead of using a generic one.(èİÎÑşÿÿÿÿ8ÄÀâ·/
+b	java:S112/"FDefine and throw a dedicated exception instead of using a generic one.(á©ÄŞ8ƒ¸Ãâ·/
 e
 java:S4488"HReplace "@RequestMapping(method = RequestMethod.PUT)" with "@PutMapping"(ŠÖ€“8ÄÀâ·/
-b	java:S1128"FDefine and throw a dedicated exception instead of using a generic one.(„äî»8ğ‹Åâ·/
-g	java:S112!"FDefine and throw a dedicated exception instead of using a generic one.(èİÎÑşÿÿÿÿ8ÄÀâ·/
+j
+java:S4488&"NReplace "@RequestMapping(method = RequestMethod.DELETE)" with "@DeleteMapping"(Ü’í*8Å†Áâ·/
+b	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(şÓã8—Ãºâ·/

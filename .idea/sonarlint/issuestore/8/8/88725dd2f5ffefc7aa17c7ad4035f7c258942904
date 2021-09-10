@@ -1,13 +1,13 @@
 
-K
-java:S1128"/Remove this unused import 'java.sql.ResultSet'.(ˆóÚw8‰Û®»·/
-p
-java:S4488P"NReplace "@RequestMapping(method = RequestMethod.DELETE)" with "@DeleteMapping"(„‹¶ùÿÿÿÿ8è‚”Ä·/
-l
-java:S4488"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(†ç¶ùÿÿÿÿ8è‚”Ä·/
-j
-java:S4488;"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(»’Åûÿÿÿÿ8è‚”Ä·/
-j
-java:S4488-"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(ïÜ¼òøÿÿÿÿ8è‚”Ä·/
 d
 java:S4488D"HReplace "@RequestMapping(method = RequestMethod.PUT)" with "@PutMapping"(•ŞK8è‚”Ä·/
+j
+java:S4488-"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(ïÜ¼òøÿÿÿÿ8è‚”Ä·/
+p
+java:S4488P"NReplace "@RequestMapping(method = RequestMethod.DELETE)" with "@DeleteMapping"(„‹¶ùÿÿÿÿ8è‚”Ä·/
+K
+java:S1128"/Remove this unused import 'java.sql.ResultSet'.(ˆóÚw8‰Û®»·/
+j
+java:S4488;"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(»’Åûÿÿÿÿ8è‚”Ä·/
+l
+java:S4488"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(†ç¶ùÿÿÿÿ8è‚”Ä·/
