@@ -13,7 +13,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
-
+/**
+ * 部门管理
+ * @author LPJ
+ */
 @Service
 public class DepartmentService extends BaseService {
 /**

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
- *
+ * 权限管理
  * @author LPJ
  */
 public interface PermissionApiDao extends JpaRepository<PermissionApi,String>,

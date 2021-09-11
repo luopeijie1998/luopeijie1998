@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
- * 部分dao接口
+ * 部门管理
+ * @author LPJ
  */
 public interface DepartmentDao extends JpaRepository<Department,String> , JpaSpecificationExecutor<Department> {
 }

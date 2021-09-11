@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.ResultSet;
 import java.util.List;
-
+/**
+ * 部门管理
+ * @author LPJ
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/commpany")

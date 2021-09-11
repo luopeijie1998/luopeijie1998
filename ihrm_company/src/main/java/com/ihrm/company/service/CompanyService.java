@@ -7,7 +7,10 @@ import com.ihrm.domain.company.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * 公司管理
+ * @author LPJ
+ */
 import java.sql.Date;
 import java.util.List;
 
