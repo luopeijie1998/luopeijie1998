@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @author LPJ
  */
 public interface UserDao extends JpaRepository<User,String>, JpaSpecificationExecutor<User> {
+    User findByMobile(String mobile);
 }

@@ -154,4 +154,8 @@ public class UserService {
     }
 
 
+    public User findByMobile(String mobile) {
+        return userDao.findByMobile(mobile);
+
+    }
 }
