@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +26,17 @@ public class UserController extends BaseController {
     private UserService userService;
 
 
+    @PostMapping("/user/assignRoles")
+    public Result assignRoles(@RequestBody Map<String, Object> map){
+        //1.获取被分配的用户id
+        String userId=(String)map.get("id");
+        //2.获取到角色的id列表
+        List<String> roleIds=(List<String>) map.get("roleds");
+        //3.调用service完成角色的分配
+        userService.assignRoles(userId,roleIds);
+        return Result.SUCCESS();
+
+    }
     @PostMapping(value = "/user")
     public Result add(@RequestBody User user) throws Exception {
         userService.save(user);
