@@ -33,6 +33,7 @@ public class UserController extends BaseController {
     private UserService userService;
     @Autowired
     private JwtUtil jwtUtils;
+    Claims claims;
 
 
     @PostMapping("/user/assignRoles")
@@ -99,18 +100,15 @@ public class UserController extends BaseController {
     }
     /**
      * 获取个人信息
+     *       1.获取用户id
+     *       2.根据用户id查询用户
+     *       3.构建返回值对象
+     *       4.响应
      */
-    @PostMapping("/profile")
+    @PostMapping(path="/profile" ,name="api-userupdate")
     public Result profile(HttpServletRequest request) throws CommonException {
-        //请求中获取key为Authorization的头信息
-        String authorization = request.getHeader("Authorization");
-        if(StringUtils.isEmpty(authorization)) {
-            throw new CommonException(ResultCode.UNAUTHENTICATED);
-        }
-        //前后端约定头信息内容以 Bearer+空格+token 形式组成
-        String token = authorization.replace("Bearer ", "");
-        //比较并获取claims
-        Claims claims = jwtUtils.parseJWT(token);
+
+        claims = (Claims) request.getAttribute("user_claims");
         if(claims == null) {
             throw new CommonException(ResultCode.UNAUTHENTICATED);
         }
