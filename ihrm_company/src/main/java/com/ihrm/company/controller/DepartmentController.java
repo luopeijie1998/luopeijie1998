@@ -11,7 +11,6 @@ import com.ihrm.domain.company.response.DeptListResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.ResultSet;
 import java.util.List;
 /**
  * 部门管理

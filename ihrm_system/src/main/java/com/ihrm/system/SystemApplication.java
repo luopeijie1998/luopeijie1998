@@ -22,7 +22,5 @@ public class SystemApplication {
 
 
     @Bean
-    public IdWorker idWorker(){return new IdWorker();}
-    @Bean
     public JwtUtil jwtUtil(){return new JwtUtil();}
 }

@@ -5,6 +5,7 @@ import com.ihrm.domain.system.Role;
 import com.ihrm.domain.system.User;
 import com.ihrm.system.dao.RoleDao;
 import com.ihrm.system.dao.UserDao;
+import org.apache.shiro.crypto.hash.Md2Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,7 +44,9 @@ public class UserService {
         //填充其他参数
         user.setId(idWorker.nextId() + "");
         user.setCreateTime(new Date()); //创建时间
-        user.setPassword("123456");//设置默认登录密码
+        String password =new Md2Hash("123456",user.getMobile(),3).toString();
+        user.setLevel("user");
+        user.setPassword(password);//设置默认登录密码
         user.setEnableState(1);//状态
         userDao.save(user);
     }

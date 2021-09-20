@@ -6,17 +6,22 @@ import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
 import com.ihrm.common.exception.CommonException;
 import com.ihrm.common.utils.JwtUtil;
-import com.ihrm.domain.company.response.ProfileResult;
 import com.ihrm.domain.system.User;
+
+import com.ihrm.domain.system.response.ProfileResult;
 import com.ihrm.system.service.UserService;
 import io.jsonwebtoken.Claims;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +65,7 @@ public class UserController extends BaseController {
         return Result.SUCCESS();
     }
 
+    @RequiresPermissions(value="API-USER-DELETE")
     @DeleteMapping(value = "/user/{id}")
     public Result delete(@PathVariable(name = "id") String id) throws Exception {
         userService.delete(id);
@@ -85,18 +91,35 @@ public class UserController extends BaseController {
     public Result login(@RequestBody Map<String,String> loginMap) {
         String mobile = loginMap.get("mobile");
         String password = loginMap.get("password");
-        User user = userService.findByMobile(mobile);
-        //登录失败
-        if (user == null || !user.getPassword().equals(password)) {
+        try {
+            //1.构造登录令牌
+            //加密密码
+            password = new Md5Hash(password,mobile,3).toString();  //1.密码，盐，加密次数
+            UsernamePasswordToken upToken = new UsernamePasswordToken(mobile,password);
+            //2.获取subject
+            Subject subject = SecurityUtils.getSubject();
+            //3.调用login方法，进入realm完成认证
+            subject.login(upToken);
+            //4.返回sessionid
+            String sessionId = (String)subject.getSession().getId();
+            //5.构造返回结果
+            return new Result(ResultCode.SUCCESS,sessionId);
+        }catch (Exception e) {
             return new Result(ResultCode.MOBILEORPASSWORDERROR);
-        } else {
-            //登录成功
-            Map<String, Object> map = new HashMap<>();
-            map.put("companyId", user.getCompanyId());
-            map.put("companyName", user.getCompanyName());
-            String token = jwtUtils.createJWT(user.getId(), user.getUsername(), map);
-            return new Result(ResultCode.SUCCESS, token);
         }
+
+//        User user = userService.findByMobile(mobile);
+//        //登录失败
+//        if (user == null || !user.getPassword().equals(password)) {
+//            return new Result(ResultCode.MOBILEORPASSWORDERROR);
+//        } else {
+//            //登录成功
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("companyId", user.getCompanyId());
+//            map.put("companyName", user.getCompanyName());
+//            String token = jwtUtils.createJWT(user.getId(), user.getUsername(), map);
+//            return new Result(ResultCode.SUCCESS, token);
+//        }
     }
     /**
      * 获取个人信息
@@ -108,12 +131,20 @@ public class UserController extends BaseController {
     @PostMapping(path="/profile" ,name="api-userupdate")
     public Result profile(HttpServletRequest request) throws CommonException {
 
-        claims = (Claims) request.getAttribute("user_claims");
-        if(claims == null) {
-            throw new CommonException(ResultCode.UNAUTHENTICATED);
-        }
-        String userId = claims.getId();
-        User user = userService.findById(userId);
-        return new Result(ResultCode.SUCCESS,new ProfileResult(user));
+        //获取session中的安全数据
+        Subject subject=SecurityUtils.getSubject();
+        //1.subject获取所有的安全数据集合
+        PrincipalCollection principals = subject.getPrincipals();
+        //2.获取安全数据
+        ProfileResult result=(ProfileResult) principals.getPrimaryPrincipal();
+        return new Result(ResultCode.SUCCESS,result);
+
+//        claims = (Claims) request.getAttribute("user_claims");
+//        if(claims == null) {
+//            throw new CommonException(ResultCode.UNAUTHENTICATED);
+//        }
+//        String userId = claims.getId();
+//        User user = userService.findById(userId);
+//        return new Result(ResultCode.SUCCESS,new ProfileResult(user));
     }
 }
