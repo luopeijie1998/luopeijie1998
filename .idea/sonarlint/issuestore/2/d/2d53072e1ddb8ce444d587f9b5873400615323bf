@@ -1,2 +1,8 @@
 
-]	java:S125N"<This block of commented-out lines of code should be removed.(—¢ŒÂÿÿÿÿÿ8®­ÁÄ·/
+Q
+java:S3740"/Provide the parametrized type for this generic.(¤‘¥Ûøÿÿÿÿ8æÂ ½/
+Y
+java:S36555"7Call "Optional#isPresent()" before accessing the value.(û¸€íÿÿÿÿÿ8æÂ ½/
+]	java:S125Q"<This block of commented-out lines of code should be removed.(—¢ŒÂÿÿÿÿÿ8®­ÁÄ·/
+Y
+java:S3655B"7Call "Optional#isPresent()" before accessing the value.(ßù‡äÿÿÿÿÿ8æÂ ½/

@@ -1,15 +1,15 @@
 
-[
-java:S18543"?Remove this useless assignment to local variable "companyList".(ªÆ‹P8‚ª³º·/
 l
-java:S4488"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(Õ¡¤ùÿÿÿÿ8‚ª³º·/
+java:S4488"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(Õ¡¤ùÿÿÿÿ8‚ª³º·/
 e
-java:S44880"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(¤úÙ8‚ª³º·/
+java:S4488%"HReplace "@RequestMapping(method = RequestMethod.PUT)" with "@PutMapping"(Õç¼ñ8‚ª³º·/
 e
-java:S4488!"HReplace "@RequestMapping(method = RequestMethod.PUT)" with "@PutMapping"(Õç¼ñ8‚ª³º·/
+java:S44884"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(¤úÙ8‚ª³º·/
 L
-java:S14813"0Remove this unused "companyList" local variable.(ªÆ‹P8‚ª³º·/
-]
-java:S4684""@Replace this persistent entity with a simple POJO or DTO object.(çÂ—Ä8‚ª³º·/
+java:S14817"0Remove this unused "companyList" local variable.(ªÆ‹P8‚ª³º·/
 b
-java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(¸Ÿ•úÿÿÿÿ8‚ª³º·/
+java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(¸Ÿ•úÿÿÿÿ8‚ª³º·/
+]
+java:S4684&"@Replace this persistent entity with a simple POJO or DTO object.(çÂ—Ä8‚ª³º·/
+[
+java:S18547"?Remove this useless assignment to local variable "companyList".(ªÆ‹P8‚ª³º·/
