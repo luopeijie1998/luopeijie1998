@@ -2,6 +2,7 @@ package com.ihrm.common.controller;
 
 
 import com.ihrm.domain.system.response.ProfileResult;
+import io.jsonwebtoken.Claims;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -12,11 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class BaseController {
 
-    public  HttpServletRequest request;
-    public  HttpServletResponse response;
-
+    protected HttpServletRequest request;
+    protected HttpServletResponse response;
     protected String companyId;
+    protected String userId;
     protected String companyName;
+    protected Claims claims;
     //使用shiro  获取公共数据
     //ModelAttribute 注解  在进入控制器之前执行的方法
     @ModelAttribute
