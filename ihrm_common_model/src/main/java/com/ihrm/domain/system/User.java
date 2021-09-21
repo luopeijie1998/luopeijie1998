@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -108,4 +109,16 @@ public class User implements Serializable {
             inverseJoinColumns={@JoinColumn(name="role_id",referencedColumnName="id")}
     )
     private Set<Role> roles = new HashSet<>();//用户与角色   多对多
+    //根据解析出的excel列数据，进行user初始构造，objs数据位置和excel上传位置一致。
+    public User(Object[] objs, String companyId, String companyName) {
+        //默认手机号excel读取为字符串会存在科学记数法问题，转化处理
+        this.mobile = new DecimalFormat("#").format(objs[2]);
+        this.username = objs[1].toString();
+        this.createTime = new Date();
+        this.timeOfEntry = (Date) objs[5];
+        this.formOfEmployment = ((Double) objs[4]).intValue() ;
+        this.workNumber = new DecimalFormat("#").format(objs[3]).toString();
+        this.companyId = companyId;
+        this.companyName = companyName;
+    }
 }

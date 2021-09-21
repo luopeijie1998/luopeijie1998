@@ -1,8 +1,10 @@
 package com.ihrm.system.service;
 
 import com.ihrm.common.utils.IdWorker;
+import com.ihrm.domain.company.Department;
 import com.ihrm.domain.system.Role;
 import com.ihrm.domain.system.User;
+import com.ihrm.system.client.DepartmentFeignClient;
 import com.ihrm.system.dao.RoleDao;
 import com.ihrm.system.dao.UserDao;
 import org.apache.shiro.crypto.hash.Md2Hash;
@@ -32,11 +34,9 @@ public class UserService {
     @Autowired
     private RoleDao roleDao;
 
-    public User findByMobileAndPassword(String mobile,String password)
-    {
+    @Autowired
+    private DepartmentFeignClient departmentFeignClient;
 
-        return  new User();
-    }
     /**
      * 添加用户
      */
@@ -160,5 +160,28 @@ public class UserService {
     public User findByMobile(String mobile) {
         return userDao.findByMobile(mobile);
 
+    }
+
+    public void save(List<User> users, String companyId, String companyName) throws Exception {
+       for (User user:users){
+          //配置密码
+          user.setPassword(new Md2Hash("123456",user.getMobile(),3).toString());
+           //配置id
+           user.setId(idWorker.nextId()+"");
+           //其他基本属性
+           user.setCompanyId(companyId);
+           user.setCompanyName(companyName);
+           user.setInServiceStatus(1);
+           user.setEnableState(1);
+           user.setLevel("user");
+           //获取部门信息
+           Department dept =
+                   departmentFeignClient.findById(user.getDepartmentId(),user.getCompanyId());
+           if(dept != null) {
+               user.setDepartmentId(dept.getId());
+               user.setDepartmentName(dept.getName());
+           }
+           userDao.save(user);
+       }
     }
 }

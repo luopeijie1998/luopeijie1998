@@ -94,4 +94,8 @@ public class DepartmentService extends BaseService {
       {
         departmentDao.deleteById(id);
       }
+
+    public Department findByCode(String code, String companyId) {
+          return departmentDao.findByCode(code, companyId);
+    }
 }

@@ -85,6 +85,14 @@ public class DepartmentController extends BaseController {
         departmentService.deleteById(id);
         return new Result(ResultCode.SUCCESS);
     }
+    @RequestMapping(value = "/company/departments/search/", method =
+            RequestMethod.POST)
+    public Department findById(@RequestParam(value = "code") String code,
+                               @RequestParam(value = "companyId") String companyId)
+            throws Exception{
+        Department dept = departmentService.findByCode(code,companyId);
+        return dept;
+    }
 
 
 

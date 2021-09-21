@@ -9,8 +9,10 @@ import com.ihrm.common.utils.JwtUtil;
 import com.ihrm.domain.system.User;
 
 import com.ihrm.domain.system.response.ProfileResult;
+import com.ihrm.system.client.DepartmentFeignClient;
 import com.ihrm.system.service.UserService;
 import io.jsonwebtoken.Claims;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -20,8 +22,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +42,8 @@ public class UserController extends BaseController {
     private UserService userService;
     @Autowired
     private JwtUtil jwtUtils;
+    @Autowired
+    private DepartmentFeignClient departmentFeignClient;
     Claims claims;
 
 
@@ -146,5 +152,64 @@ public class UserController extends BaseController {
 //        String userId = claims.getId();
 //        User user = userService.findById(userId);
 //        return new Result(ResultCode.SUCCESS,new ProfileResult(user));
+    }
+    //测试通过系统微服务调用企业微服务方法
+    @RequestMapping(value = "/test/{id}")
+    public void findDeptById(@PathVariable  String id){
+        Result dept = departmentFeignClient.findById(id);
+        System.out.println(dept.getData());
+    }
+
+    //通过POI导入EXCEL新增用户
+    @RequestMapping(value="/user/import", method = RequestMethod.POST)
+    public Result importExcel(@RequestParam(name = "file") MultipartFile attachment) throws Exception {
+        //根据上传流信息创建工作簿
+        Workbook workbook = WorkbookFactory.create(attachment.getInputStream());
+        //获取第一个sheet
+        Sheet sheet = workbook.getSheetAt(0);
+        List<User> users = new ArrayList<>();
+
+        //从第二行开始获取数据
+        for (int rowNum = 1; rowNum <sheet.getLastRowNum(); rowNum++){
+            Row row = sheet.getRow(rowNum);
+            Object  objs[] = new Object[row.getLastCellNum()];
+            //从第二列获取数据
+            for(int cellNum = 1; cellNum < row.getLastCellNum();cellNum++) {
+                Cell cell = row.getCell(cellNum);
+                objs[cellNum] = getValue(cell);
+            }
+            User user = new User(objs,companyId,companyName);
+            user.setDepartmentId(objs[objs.length-1].toString());
+            users.add(user);
+        }
+        //第一个参数：用户列表，第二个参数：部门编码
+        userService.save(users,companyId,companyName);
+        return Result.SUCCESS();
+
+    }
+
+    private Object getValue(Cell cell) {
+        Object value = null;
+        switch (cell.getCellType()){
+            case STRING: //字符串类型
+                value = cell.getStringCellValue();
+                break;
+            case BOOLEAN: //boolean类型
+                value = cell.getBooleanCellValue();
+                break;
+            case NUMERIC: //数字类型（包含日期和普通数字）
+                if(DateUtil.isCellDateFormatted(cell)) {
+                    value = cell.getDateCellValue();
+                }else{
+                    value = cell.getNumericCellValue();
+                }
+                break;
+            case FORMULA: //公式类型
+                value = cell.getCellFormula();
+                break;
+            default:
+                break;
+        }
+        return value;
     }
 }
