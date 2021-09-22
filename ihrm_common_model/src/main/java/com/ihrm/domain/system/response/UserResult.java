@@ -35,6 +35,11 @@ public class UserResult implements Serializable {
     private String password;
 
     /**
+     * 用户头像
+     */
+    private String staffPhoto;
+
+    /**
      * 启用状态 0为禁用 1为启用
      */
     private Integer enableState;

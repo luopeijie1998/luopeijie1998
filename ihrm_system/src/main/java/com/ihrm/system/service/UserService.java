@@ -7,16 +7,22 @@ import com.ihrm.domain.system.User;
 import com.ihrm.system.client.DepartmentFeignClient;
 import com.ihrm.system.dao.RoleDao;
 import com.ihrm.system.dao.UserDao;
+import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.shiro.crypto.hash.Md2Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -183,5 +189,53 @@ public class UserService {
            }
            userDao.save(user);
        }
+    }
+
+    /**
+     * 处理EXCEL数据对应类型的获取
+     * @param cell
+     * @return
+     */
+    public Object getValue(Cell cell) {
+        Object value = null;
+        switch (cell.getCellType()){
+            case STRING: //字符串类型
+                value = cell.getStringCellValue();
+                break;
+            case BOOLEAN: //boolean类型
+                value = cell.getBooleanCellValue();
+                break;
+            case NUMERIC: //数字类型（包含日期和普通数字）
+                if(DateUtil.isCellDateFormatted(cell)) {
+                    value = cell.getDateCellValue();
+                }else{
+                    value = cell.getNumericCellValue();
+                }
+                break;
+            case FORMULA: //公式类型
+                value = cell.getCellFormula();
+                break;
+            default:
+                break;
+        }
+        return value;
+    }
+
+    /**
+     * Data URL方式存储图像
+     * @param id
+     * @param file
+     * @return
+     */
+    public String uploadImage(String id, MultipartFile file) throws Exception {
+        //根据id查询用户
+        User user = userDao.findById(id).get();
+        //对上传文件进行Base64编码
+        String s = Base64.encode(file.getBytes());
+        //拼接DataURL数据头
+        String dataUrl = new String("data:image/jpg;base64,"+s);
+        //保存图片信息
+        userDao.save(user);
+        return dataUrl;
     }
 }

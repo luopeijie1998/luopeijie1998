@@ -176,7 +176,7 @@ public class UserController extends BaseController {
             //从第二列获取数据
             for(int cellNum = 1; cellNum < row.getLastCellNum();cellNum++) {
                 Cell cell = row.getCell(cellNum);
-                objs[cellNum] = getValue(cell);
+                objs[cellNum] = userService.getValue(cell);
             }
             User user = new User(objs,companyId,companyName);
             user.setDepartmentId(objs[objs.length-1].toString());
@@ -187,29 +187,12 @@ public class UserController extends BaseController {
         return Result.SUCCESS();
 
     }
-
-    private Object getValue(Cell cell) {
-        Object value = null;
-        switch (cell.getCellType()){
-            case STRING: //字符串类型
-                value = cell.getStringCellValue();
-                break;
-            case BOOLEAN: //boolean类型
-                value = cell.getBooleanCellValue();
-                break;
-            case NUMERIC: //数字类型（包含日期和普通数字）
-                if(DateUtil.isCellDateFormatted(cell)) {
-                    value = cell.getDateCellValue();
-                }else{
-                    value = cell.getNumericCellValue();
-                }
-                break;
-            case FORMULA: //公式类型
-                value = cell.getCellFormula();
-                break;
-            default:
-                break;
-        }
-        return value;
+    @RequestMapping(value = "user/upload/{id}")
+    public Result upload(@PathVariable String id,@RequestParam(name = "file") MultipartFile file)
+            throws Exception{
+        String image = userService.uploadImage(id, file);
+        return new Result(ResultCode.SUCCESS,image);
     }
+
+
 }
