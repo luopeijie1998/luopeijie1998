@@ -1,6 +1,7 @@
 package com.ihrm.system.service;
 
 import com.ihrm.common.utils.IdWorker;
+import com.ihrm.common.utils.QiniuUploadUtil;
 import com.ihrm.domain.company.Department;
 import com.ihrm.domain.system.Role;
 import com.ihrm.domain.system.User;
@@ -17,12 +18,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -34,14 +33,15 @@ public class UserService {
 
     @Autowired
     private IdWorker idWorker;
-
+    @Autowired
+    private QiniuUploadUtil qiniuUploadUtil;
     @Autowired
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
-
     @Autowired
     private DepartmentFeignClient departmentFeignClient;
+
 
     /**
      * 添加用户
@@ -238,5 +238,22 @@ public class UserService {
         user.setStaffPhoto(dataUrl);
         userDao.save(user);
         return dataUrl;
+    }
+    /**
+     * 图片上传到云服务器上
+     */
+    public String uploadImageByCloud(String id, MultipartFile file) throws Exception {
+        //根据id查询用户
+        User user = userDao.findById(id).get();
+        //拼接DataURL数据头
+        String dataUrl = qiniuUploadUtil.upload(user.getId(), file.getBytes());
+        //保存图片信息
+
+        if (dataUrl!=null){
+        user.setStaffPhoto(dataUrl);
+        userDao.save(user);
+        return dataUrl;
+        }
+        return null;
     }
 }

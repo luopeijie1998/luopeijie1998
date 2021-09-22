@@ -40,8 +40,7 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private JwtUtil jwtUtils;
+
     @Autowired
     private DepartmentFeignClient departmentFeignClient;
     Claims claims;
@@ -187,6 +186,7 @@ public class UserController extends BaseController {
         return Result.SUCCESS();
 
     }
+    //Data URL 头像上传
     @RequestMapping(value = "user/upload/{id}")
     public Result upload(@PathVariable String id,@RequestParam(name = "file") MultipartFile file)
             throws Exception{

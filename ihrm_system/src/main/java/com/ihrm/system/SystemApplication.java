@@ -2,6 +2,7 @@ package com.ihrm.system;
 
 import com.ihrm.common.utils.IdWorker;
 import com.ihrm.common.utils.JwtUtil;
+import com.ihrm.common.utils.QiniuUploadUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
