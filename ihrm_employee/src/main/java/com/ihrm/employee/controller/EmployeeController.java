@@ -1,31 +1,23 @@
 package com.ihrm.employee.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.ihrm.common.controller.BaseController;
 import com.ihrm.common.entity.PageResult;
 import com.ihrm.common.entity.Result;
 import com.ihrm.common.entity.ResultCode;
-import com.ihrm.common.exception.CommonException;
-
 import com.ihrm.common.utils.BeanMapUtils;
 import com.ihrm.domain.employee.*;
 import com.ihrm.domain.employee.response.EmployeeReportResult;
-
 import com.ihrm.employee.service.*;
-import io.jsonwebtoken.Claims;
-
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -208,5 +200,84 @@ public class EmployeeController extends BaseController {
         Page<EmployeeArchive> searchPage = archiveService.findSearch(map, page, pagesize);
         PageResult<EmployeeArchive> pr = new PageResult(searchPage.getTotalElements(),searchPage.getContent());
         return new Result(ResultCode.SUCCESS,pr);
+    }
+    /**
+     * excel导出
+     */
+    @RequestMapping(value = "/export/{month}", method = RequestMethod.GET)
+    public void export(@PathVariable(name = "month") String month) throws Exception {
+
+        //1.获取数据
+        List<EmployeeReportResult> report=userCompanyPersonalService.findByReport(companyId,month+"%");
+
+        //2.创建工作簿
+        XSSFWorkbook workbook = new XSSFWorkbook();
+
+        //3.构造sheet
+        String[] titles = {"编号", "姓名", "手机","最高学历", "国家地区", "护照号", "籍贯",
+                "生日", "属相","入职时间","离职类型","离职原因","离职时间"};
+        Sheet sheet = workbook.createSheet();
+        Row row = sheet.createRow(0);
+        AtomicInteger headersAi = new AtomicInteger();
+        for (String title : titles) {
+            Cell cell = row.createCell(headersAi.getAndIncrement());
+            cell.setCellValue(title);
+        }
+
+        //4.构造excel表中的数据
+        AtomicInteger datasAi = new AtomicInteger(1);
+        Cell cell = null;
+        for (EmployeeReportResult employeeReportResult : report){
+            //得到  行对象
+            Row dataRow = sheet.createRow(datasAi.getAndIncrement());
+            //编号
+            cell = dataRow.createCell(0);
+            cell.setCellValue(employeeReportResult.getUserId());
+            //姓名
+            cell = dataRow.createCell(1);
+            cell.setCellValue(employeeReportResult.getUsername());
+            //手机
+            cell = dataRow.createCell(2);
+            cell.setCellValue(employeeReportResult.getMobile());
+            //最高学历
+            cell = dataRow.createCell(3);
+            cell.setCellValue(employeeReportResult.getTheHighestDegreeOfEducation());
+            //国家地区
+            cell = dataRow.createCell(4);
+            cell.setCellValue(employeeReportResult.getNationalArea());
+            //护照号
+            cell = dataRow.createCell(5);
+            cell.setCellValue(employeeReportResult.getPassportNo());
+            //籍贯
+            cell = dataRow.createCell(6);
+            cell.setCellValue(employeeReportResult.getNativePlace());
+            //生日
+            cell = dataRow.createCell(7);
+            cell.setCellValue(employeeReportResult.getBirthday());
+            //属相
+            cell = dataRow.createCell(8);
+            cell.setCellValue(employeeReportResult.getZodiac());
+            //入职时间
+            cell = dataRow.createCell(9);
+            cell.setCellValue(employeeReportResult.getTimeOfEntry());
+            //离职类型
+            cell = dataRow.createCell(10);
+            cell.setCellValue(employeeReportResult.getTypeOfTurnover());
+            //离职原因
+            cell = dataRow.createCell(11);
+            cell.setCellValue(employeeReportResult.getReasonsForLeaving());
+            //离职时间
+            cell = dataRow.createCell(12);
+            cell.setCellValue(employeeReportResult.getResignationTime());
+
+            //5.数据传输
+            String fileName = URLEncoder.encode(month+"人员信息.xlsx", "UTF-8");
+            response.setContentType("application/octet-stream");
+            response.setHeader("content-disposition", "attachment;filename=" + new String(fileName.getBytes("ISO8859-1")));
+            response.setHeader("filename", fileName);
+            workbook.write(response.getOutputStream());
+
+        }
+
     }
 }

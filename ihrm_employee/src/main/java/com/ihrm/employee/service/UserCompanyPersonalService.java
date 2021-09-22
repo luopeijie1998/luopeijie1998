@@ -24,4 +24,10 @@ public class UserCompanyPersonalService {
     public UserCompanyPersonal findById(String userId) {
         return userCompanyPersonalDao.findByUserId(userId);
     }
+
+    //根据企业id和年月查询
+    public List<EmployeeReportResult> findByReport(String companyId, String month) {
+        return userCompanyPersonalDao.findByReport(companyId,month);
+    }
+
 }

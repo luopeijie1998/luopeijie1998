@@ -14,4 +14,7 @@ import java.util.Map;
  */
 public interface UserCompanyPersonalDao extends JpaRepository<UserCompanyPersonal, String>, JpaSpecificationExecutor<UserCompanyPersonal> {
     UserCompanyPersonal findByUserId(String userId);
+
+    @Query(value = "select new com.ihrm.domain.employee.response.EmployeeReportResult(a,b) FROM UserCompanyPersonal a LEFT JOIN EmployeeResignation b ON a.userId=b.userId WHERE a.companyId =?1 AND a.timeOfEntry LIKE ?2 OR (b.resignationTime LIKE ?2)")
+    List<EmployeeReportResult> findByReport(String companyId,String month);
 }
