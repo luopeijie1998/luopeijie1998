@@ -235,6 +235,7 @@ public class UserService {
         //拼接DataURL数据头
         String dataUrl = new String("data:image/jpg;base64,"+s);
         //保存图片信息
+        user.setStaffPhoto(dataUrl);
         userDao.save(user);
         return dataUrl;
     }
