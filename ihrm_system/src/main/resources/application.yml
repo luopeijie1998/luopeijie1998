@@ -29,3 +29,12 @@ jwt:
   config:
   key: saas-ihrm
   ttl: 360000
+ai:
+    appId: 24902573
+    apiKey: u449Fg81eZtTLOEEB8CPyVdy
+    secretKey: LF3tYt67oNWyxmDs800CTD1i8aXB2C2v
+    imageType: BASE64
+    groupId: ihrm
+qr:
+  url: https://localhost:8080/#/facelogin
+

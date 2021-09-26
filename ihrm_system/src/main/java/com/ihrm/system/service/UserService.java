@@ -8,6 +8,7 @@ import com.ihrm.domain.system.User;
 import com.ihrm.system.client.DepartmentFeignClient;
 import com.ihrm.system.dao.RoleDao;
 import com.ihrm.system.dao.UserDao;
+import com.ihrm.system.utils.BaiduAiUtil;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -41,6 +42,8 @@ public class UserService {
     private RoleDao roleDao;
     @Autowired
     private DepartmentFeignClient departmentFeignClient;
+    @Autowired
+    private BaiduAiUtil baiduAiUtil;
 
 
     /**
@@ -240,7 +243,10 @@ public class UserService {
         return dataUrl;
     }
     /**
-     * 图片上传到云服务器上
+     * 1.图片上传到云服务器上
+     * 2.上传到百度云AI人脸库中
+     *    2.1判断该用户是否已上传
+     *    2.2 若未上传则上传  若已上传则更新
      */
     public String uploadImageByCloud(String id, MultipartFile file) throws Exception {
         //根据id查询用户
@@ -252,6 +258,18 @@ public class UserService {
         if (dataUrl!=null){
         user.setStaffPhoto(dataUrl);
         userDao.save(user);
+        //判断是否已经注册面部信息
+            Boolean aBoolean=baiduAiUtil.faceExist(id);
+            String s = Base64.encode(file.getBytes());
+            //拼接DataURL数据头
+            String imgBase64 = new String("data:image/jpg;base64,"+s);
+            if (aBoolean){
+                //更新
+                baiduAiUtil.faceUpdate(id,imgBase64);
+            }else{
+                //注册
+                baiduAiUtil.faceRegister(id,imgBase64);
+            }
         return dataUrl;
         }
         return null;
